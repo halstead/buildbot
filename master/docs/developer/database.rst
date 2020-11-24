@@ -397,6 +397,20 @@ ability to use unique indexes to prevent duplicate rows.
 InnoDB only supports indexes up to 255 unicode characters, which is why
 all indexed columns are limited to 255 characters in Buildbot.
 
+Override Default Storage Engine in MySQL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. index:: single: MySQL;
+
+To override your default storage engine add the following to ``special_case_mysql`` in
+:file:`master/buidlbot/db/enginestrategy.py`.
+
+
+    storage_engine = u.query.pop('storage_engine', 'MyISAM')
+    kwargs['connect_args'] = { 
+        'init_command': 'SET default_storage_engine={}'.format(storage_engine)
+    }   
+
 Transactions in MySQL
 ~~~~~~~~~~~~~~~~~~~~~
 
