@@ -204,12 +204,6 @@ class BuildbotEngineStrategy(strategies.PlainEngineStrategy):
         anything else."""
         kwargs['pool_recycle'] = int(u.query.pop('max_idle', 3600))
 
-        # default to the MyISAM storage engine
-        storage_engine = u.query.pop('storage_engine', 'MyISAM')
-        kwargs['connect_args'] = {
-            'init_command': 'SET default_storage_engine={}'.format(storage_engine)
-        }
-
         if 'use_unicode' in u.query:
             if u.query['use_unicode'] != "True":
                 raise TypeError("Buildbot requires use_unicode=True " +
